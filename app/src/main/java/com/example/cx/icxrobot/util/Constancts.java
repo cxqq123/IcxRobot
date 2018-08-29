@@ -6,6 +6,8 @@ package com.example.cx.icxrobot.util;
 
 public class Constancts {
 
+    public static final String LOG_TAG = "log_tag";
+
     public static final String USER_NAME = "user_name";
     public static final String USER_PASSWORD = "user_password";
     public static final String USER_ICON = "user_icon";
@@ -20,5 +22,6 @@ public class Constancts {
     public static final String ROBOT_URL = "http://www.tuling123.com/openapi/api?";
     public static final String ROBOT_KEY = "7cde9cc6634d42c7b54b2b3f78e22ef1";
     public static final String ROBOT_USER_ID = "MAC_ID";
+    public static final String ROBOT = "robot";
 
 }

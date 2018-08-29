@@ -28,8 +28,11 @@ import android.widget.Toast;
 import com.example.cx.icxrobot.R;
 import com.example.cx.icxrobot.adapter.AdapterChatMsg;
 import com.example.cx.icxrobot.adapter.AdapterTalk;
+import com.example.cx.icxrobot.daohelper.ChatMessageDaoHelper;
+import com.example.cx.icxrobot.entry.ChatMessage;
 import com.example.cx.icxrobot.http.HttpHelper;
 import com.example.cx.icxrobot.http.NameAndValue;
+import com.example.cx.icxrobot.me;
 import com.example.cx.icxrobot.model.ModelChatMsg;
 import com.example.cx.icxrobot.model.ModelTalk;
 import com.example.cx.icxrobot.server.ServerManager;
@@ -85,6 +88,7 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
     private IntentFilter intentFilter;
     private SmartRefreshLayout smartRefreshLayout;
 
+    private String userName = "";
 
     private static final int TALK_WHAT = 1;
     private static final int TALK_FROM_SERVER = 101;
@@ -100,6 +104,12 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
                 case TALK_FROM_SERVER:
                     ModelChatMsg result = (ModelChatMsg) msg.obj;
                     modelChatMsgList.add(result);
+                    ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.setContent(result.getContent());
+                    chatMessage.setIsMyInfo(false);
+                    chatMessage.setDate(System.currentTimeMillis() + "");
+                    chatMessage.setUsername(Constancts.ROBOT);
+                    ChatMessageDaoHelper.saveData(mContext , chatMessage);
                     if(adapterChatMsgList == null){
                         adapterChatMsgList = new AdapterChatMsg(mContext , modelChatMsgList);
                         lvMessage.setAdapter(adapterChatMsgList);
@@ -120,6 +130,8 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
         mContext = TalkActivity.this;
         inputManager = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE); //实例化输入法管理器
         ServerManager.setContext(mContext);
+        Intent intent = getIntent();
+        userName = intent.getStringExtra(Constancts.USER_NAME);
         initView();
         bindData(); //绑定数据
         setListener();
@@ -197,6 +209,15 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
 //        group = ParaseData.getAllGroupList(this).contains(chatObj) ? "0" : "1";
 //        modelChatMsgList.clear();
 //        loadChatMsg();
+
+        List<ChatMessage> list = ChatMessageDaoHelper.queryAll(mContext);
+        for(ChatMessage chatMessage : list){
+            ModelChatMsg modelChatMsg = new ModelChatMsg();
+            modelChatMsg.setMyInfo(chatMessage.getIsMyInfo());
+            modelChatMsg.setContent(chatMessage.getContent());
+            modelChatMsg.setUsername(chatMessage.getUsername());
+            modelChatMsgList.add(modelChatMsg);
+        }
         adapterChatMsgList = new AdapterChatMsg(TalkActivity.this, modelChatMsgList);
         lvMessage.setAdapter(adapterChatMsgList);
 
@@ -217,6 +238,7 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.rl_top_person:
                 Intent intent = new Intent(mContext , DetailActivity.class);
+                intent.putExtra(Constancts.USER_NAME , userName);
                 startActivity(intent);
                 break;
         }
@@ -251,6 +273,13 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
                 adapterChatMsgList.setData(modelChatMsgList);
             }
             Toast.makeText(TalkActivity.this, "消息发送成功", Toast.LENGTH_SHORT).show();
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setContent(content);
+            chatMessage.setIsMyInfo(true);
+            chatMessage.setDate(System.currentTimeMillis() + "");
+            Log.e(Constancts.LOG_TAG , "TalkActivity : " + me.user);
+            chatMessage.setUsername(me.user);
+            ChatMessageDaoHelper.saveData(mContext , chatMessage);
             sendMsgToServer(content);
             etText.setText("");
         }else{
@@ -281,6 +310,7 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
         }).start();
 
     }
+
     public void addMessage(String str){
         //封装一条消息
         modelTalk.fbID=0;
@@ -411,5 +441,8 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public void addChatMessageToDB(){
+        //添加消息进数据库
+    }
 
 }

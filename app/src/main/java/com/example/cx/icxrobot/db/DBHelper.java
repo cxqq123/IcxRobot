@@ -19,21 +19,21 @@ public class DBHelper extends SQLiteOpenHelper {
             + "[usID]	long NOT NULL DEFAULT 0,"
             + "[usLoginName]	varchar(50) NOT NULL COLLATE NOCASE DEFAULT '',"
             + "[usPassWord]	varchar(50) NOT NULL COLLATE NOCASE DEFAULT '',"
-            + "[usSign]	varchar(50) NOT NULL COLLATE NOCASE DEFAULT '',"
+            + "[usSign]	varchar(50) NOT NULL COLLATE NOCASE DEFAULT ''"
             + ")";
 
     private String sql_CreateTable_Friend = "CREATE TABLE [tb_Friend] ("
             + "[frID]	long NOT NULL DEFAULT 0,"
             + "[frUserID]	long NOT NULL DEFAULT 0,"
             + "[frName]	varchar(50) NOT NULL COLLATE NOCASE DEFAULT '',"
-            + "[frMsg]	varchar(200) NOT NULL COLLATE NOCASE DEFAULT '',"
+            + "[frMsg]	varchar(200) NOT NULL COLLATE NOCASE DEFAULT ''"
             + ")";
 
     private String sql_CreateTable_Chat = "CREATE TABLE [tb_Chat] ("
             + "[chID]	long NOT NULL DEFAULT 0,"
             + "[chUserID]	long NOT NULL DEFAULT 0,"
             + "[chName]	varchar(50) NOT NULL COLLATE NOCASE DEFAULT '',"
-            + "[chMsg]	varchar(200) NOT NULL COLLATE NOCASE DEFAULT '',"
+            + "[chMsg]	varchar(200) NOT NULL COLLATE NOCASE DEFAULT ''"
             + ")";
 
     private Context mContext = null;

@@ -19,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.cx.icxrobot.R;
+import com.example.cx.icxrobot.daohelper.UserDaoHelper;
+import com.example.cx.icxrobot.me;
 import com.example.cx.icxrobot.server.ServerManager;
 import com.example.cx.icxrobot.util.Utils;
 
@@ -87,7 +89,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
         etPassword = (EditText) findViewById(R.id.et_password);
         btnLogin = (Button) findViewById(R.id.btn_login);
-        serverManager.start(); //启动线程
+
+        //先写死
+        etName.setText("cx");
+        etPassword.setText("123");
+        etName.setSelection(etName.getText().length());
+
+//        serverManager.start(); //启动线程
     }
 
     private void setListener(){
@@ -95,11 +103,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void goHome(){
         Intent intent = new Intent(mContext, MessageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -114,13 +125,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(mContext,"当前无网络连接,请连接网络", Toast.LENGTH_LONG).show();
                 }else{
 //                    loginTask(username,password);
-                    goHome();
+                    boolean isHasUser = UserDaoHelper.querySingelUser(mContext,username,password);
+                    if(isHasUser){
+                        //说明数据库中有该人,登录成功
+                        Toast.makeText(mContext, "登录成功" , Toast.LENGTH_SHORT).show();
+                        goHome();
+                        me.user = username;
+                    }else{
+                        //没有，可以提示前去注册页面，前去注册
+                        Toast.makeText(mContext, "该用户账号不存在,可以前去注册页面去注册账号" , Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
         }
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void handlerLogin(boolean isLogin){
         if (isLogin) {
             serverManager.setUsername(username);

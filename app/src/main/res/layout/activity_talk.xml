@@ -166,6 +166,7 @@
                 android:overScrollMode="never"
                 android:divider="@null"
                 android:transcriptMode="alwaysScroll"
+                android:stackFromBottom="true"
                 >
             </ListView>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>

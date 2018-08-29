@@ -3,4 +3,75 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!--联系人详细界面的字符串-->
+    <string name="contact_recent">最近</string>
+    <string name="contact_read_more_call_log">查看更多通话记录</string>
+    <string name="contact_add">添加到联系人</string>
+    <string name="contact_call_phone">拨打电话</string>
+    <string name="contact_send_msg">发送短信</string>
+    <string name="contact_report">号码标记</string>
+
+    <string name="contact_nocalllog">暂无通话记录</string>
+    <string name="contact_unanswered">未接</string>
+    <string name="contact_unkonw">未知</string>
+    <string name="contact_unconnected">未接通</string>
+    <string name="contact_incoming">呼入</string>
+    <string name="contact_outcoming">呼出</string>
+    <string name="contact_second">秒</string>
+    <string name="contact_minute">分</string>
+    <string name="contact_hour">时</string>
+    <string name="contact_phone">手机</string>
+    <string name="contact_edit">编辑</string>
+
+    <string name="contact_year">年</string>
+    <string name="contact_month">月</string>
+    <string name="contact_day">日</string>
+
+    <string name="main_services">服务</string>
+    <string name="main_call">拨号</string>
+    <string name="main_contact">联系人</string>
+    <string name="main_message">短信</string>
+    <string name="main_phone_call">通话</string>
+
+    <string name="program_error">很抱歉,程序出现异常,即将退出.</string>
+    <string name="yesterday">昨天</string>
+    <string name="today">今天</string>
+
+    <string name="action_settings">设置</string>
+
+    <string name="izd_back">返回</string>
+    <string name="Harassment_interception">骚扰拦截</string>
+    <string name="blacklist">黑名单</string>
+
+    <!--联系人主页的字符串-->
+    <string name="contact_empty">没有联系人，确保权限已经开启!</string>
+    <!--短信页面的字符串-->
+    <string name="msg_empty">没有短信，确保权限已经开启!</string>
+
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="hand_add_phone">手动添加号码</string>
+    <string name="intercept_recode">拦截记录</string>
+    <string name="delete">删除</string>
+    <string name="unAddBlackList">未添加黑名单</string>
+    <string name="interceptMessageEmpty">暂无拦截短信</string>
+    <string name="interceptCallLogEmpty">暂无拦截通话</string>
+
+
+    <string name="test_data">测试data</string>
+
+
+
+
+
+
 </resources>

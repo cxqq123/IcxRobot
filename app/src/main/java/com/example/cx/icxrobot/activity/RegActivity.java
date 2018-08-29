@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.cx.icxrobot.R;
+import com.example.cx.icxrobot.daohelper.UserDaoHelper;
+import com.example.cx.icxrobot.entry.User;
 import com.example.cx.icxrobot.util.Utils;
 
 
@@ -85,7 +87,12 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
             etPassword.setText("");
             etPasswordAgain.setText("");
         }else{
-            Toast.makeText(mContext, "恭喜你注册成功,可以去登录，尽情的跟好友聊天了" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "恭喜你注册成功,3s后自动跳转登录页面" , Toast.LENGTH_SHORT).show();
+            User user = new User();
+            user.setName(regName);
+            user.setPassword(regPassword);
+            //保存该人，在本地数据库中
+            UserDaoHelper.saveData(mContext , user);
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {

@@ -1,4 +1,24 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+    }
+}
+
+
+greendao {
+    schemaVersion 1
+    daoPackage 'com.example.cx.icxrobot.greendao'
+    targetGenDir 'src/main/java'
+}
+
+
 
 android {
     compileSdkVersion 28
@@ -28,6 +48,9 @@ dependencies {
     api 'io.reactivex.rxjava2:rxandroid:2.1.0'
     api 'io.reactivex.rxjava2:rxjava:2.2.0'
     api 'com.squareup.okhttp3:okhttp:3.9.0'
+    api 'org.greenrobot:greendao:3.2.2' // add library
+    api 'org.greenrobot:greendao-generator:3.2.2'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation files('libs/gson-2.3.1.jar')

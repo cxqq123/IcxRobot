@@ -102,9 +102,9 @@
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
-        android:text="Tony"
         android:textSize="14dp"
         android:paddingLeft="5dp"
+        android:hint="用户名"
         android:background="@drawable/bg_et"
         />
     <!--android:hint="账号/QQ号/邮箱号"-->
@@ -116,7 +116,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/et_name"
         android:layout_marginTop="2dp"
-        android:text="12345tony"
+        android:hint="密码"
         android:password="true"
         android:textSize="14dp"
         android:paddingLeft="5dp"
@@ -136,6 +136,27 @@
         android:text="登录"
         android:textColor="@color/icx_white"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <CheckBox
+            android:id="@+id/cb_remember_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="记住密码"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_regist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册一下"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 
 </RelativeLayout>

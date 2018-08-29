@@ -27,7 +27,6 @@ import com.example.cx.icxrobot.util.Utils;
 import com.scwang.smartrefresh.header.FunGameHitBlockHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -68,11 +67,11 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             public void onRefresh(RefreshLayout refreshlayout) {
             }
         });
-        smartRefreshLayoutMessage.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-            }
-        });
+//        smartRefreshLayoutMessage.setOnLoadmoreListener(new OnLoadmoreListener() {
+//            @Override
+//            public void onLoadmore(RefreshLayout refreshlayout) {
+//            }
+//        });
 
         smartRefreshLayoutMessage.setRefreshHeader(new FunGameHitBlockHeader(mContext));
         lvMessage = (ListView) findViewById(R.id.lv_message);

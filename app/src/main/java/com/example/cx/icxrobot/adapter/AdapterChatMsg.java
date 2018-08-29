@@ -1,6 +1,8 @@
 package com.example.cx.icxrobot.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.cx.icxrobot.R;
 import com.example.cx.icxrobot.model.ModelChatMsg;
-import com.example.cx.icxrobot.util.ImageManager;
+import com.example.cx.icxrobot.view.CircleImageDrawable;
 
 import java.util.List;
 
@@ -20,6 +22,11 @@ public class AdapterChatMsg extends BaseAdapter{
 
     private List<ModelChatMsg> modelChatMsgs;
     private Context mContext;
+
+    //自己本人说的话
+    private static final int TYPE_ME_MESSAGE = 0;
+    //服务器返回的话
+    private static final int TYPE_SERVER_MESSAGE = 1;
 
     public AdapterChatMsg(Context context, List<ModelChatMsg> modelChatMsgs) {
         this.mContext = context;
@@ -47,38 +54,72 @@ public class AdapterChatMsg extends BaseAdapter{
         return position;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        int result = -1;
+        ModelChatMsg msg = modelChatMsgs.get(position);
+        if(msg.isMyInfo()){
+            result = TYPE_ME_MESSAGE;
+        }else{
+            result = TYPE_SERVER_MESSAGE;
+        }
+        return result;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        ModelChatMsg msg = getItem(position);
-        View view;
-        ViewHolder viewHolder;
-
-        if (convertView == null) {
-            assert msg != null;
-            if (!msg.isMyInfo()) {
-                view = LayoutInflater.from(mContext).inflate(R.layout.adapter_chat_other, parent, false);
-            } else {
-                view = LayoutInflater.from(mContext).inflate(R.layout.adapter_chat_me, parent, false);
+        int type = getItemViewType(position);
+        if(type == TYPE_ME_MESSAGE){
+            ViewMeHolder holder = null;
+            if(convertView == null){
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_chat_me, parent, false);
+                holder = new ViewMeHolder();
+                holder.icon = convertView.findViewById(R.id.icon);
+                holder.username = convertView.findViewById(R.id.username);
+                holder.content = convertView.findViewById(R.id.content);
+                convertView.setTag(holder);
+            }else{
+                holder = (ViewMeHolder) convertView.getTag();
             }
-            viewHolder = new ViewHolder();
-            viewHolder.icon = (ImageView) view.findViewById(R.id.icon);
-            viewHolder.username = (TextView) view.findViewById(R.id.username);
-            viewHolder.content = (TextView) view.findViewById(R.id.content);
+            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources() , R.drawable.avasterdoor);
+            holder.icon.setImageDrawable(new CircleImageDrawable(bitmap));
+            holder.username.setText(modelChatMsgs.get(position).getUsername());
+            holder.content.setText(modelChatMsgs.get(position).getContent());
 
-            view.setTag(viewHolder);
-        } else {
-            view = convertView;
-            viewHolder = (ViewHolder) view.getTag();
+        }else{
+            ViewServerHolder holder = null;
+            if(convertView == null){
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_chat_other , parent , false);
+                holder = new ViewServerHolder();
+                holder.icon = convertView.findViewById(R.id.icon);
+                holder.username = convertView.findViewById(R.id.username);
+                holder.content = convertView.findViewById(R.id.content);
+                convertView.setTag(holder);
+            }else{
+                holder = (ViewServerHolder) convertView.getTag();
+            }
+            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources() , R.drawable.acx);
+            holder.icon.setImageDrawable(new CircleImageDrawable(bitmap));
+            holder.username.setText(modelChatMsgs.get(position).getUsername());
+            holder.content.setText(modelChatMsgs.get(position).getContent());
         }
-        viewHolder.icon.setImageResource(ImageManager.imagesAvatar[modelChatMsgs.get(position).getIconID()]);
-        viewHolder.username.setText(msg.isMyInfo() ? modelChatMsgs.get(position).getUsername() : modelChatMsgs.get(position).getChatObj());
-        viewHolder.content.setText(modelChatMsgs.get(position).getContent());
-        return view;
+        return convertView;
     }
 
-    private class ViewHolder {
+    private class ViewMeHolder {
+        ImageView icon;
+        TextView username;
+        TextView content;
+    }
+
+    private class ViewServerHolder{
         ImageView icon;
         TextView username;
         TextView content;
